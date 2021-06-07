@@ -15,9 +15,15 @@ export default {
     typescript(),
     terser()
   ],
-  output: {
-    file: resolve("index.js"),
-    format: "umd",
-    name: "aminnairi.jsonvalidator"
-  }
+  output: [
+    {
+      file: resolve("index.js"),
+      format: "umd",
+      name: "aminnairi.jsonvalidator"
+    },
+    {
+      file: resolve("index.mjs"),
+      format: "esm"
+    }
+  ]
 }

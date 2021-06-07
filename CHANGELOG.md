@@ -2,8 +2,23 @@
 
 ## Versions
 
+- [`0.3.0`](#030)
 - [`0.2.0`](#020)
 - [`0.1.0`](#010)
+
+## 0.3.0
+
+### Major changes
+
+None.
+
+### Minor changes
+
+- Deno typescript support ([#2](https://github.com/aminnairi/javascript-jsonvalidator/pull/2))
+
+### Patches
+
+None.
 
 ## 0.2.0
 

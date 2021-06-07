@@ -5,7 +5,8 @@
   "description": "A sane validator for your insane JSON data",
   "files": [
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "index.mjs"
   ],
   "homepage": "https://github.com/aminnairi/javascript-jsonvalidator",
   "keywords": [
@@ -15,6 +16,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "main": "index.js",
+  "module": "index.mjs",
   "name": "@aminnairi/jsonvalidator",
   "types": "index.d.ts",
   "version": "0.1.0",

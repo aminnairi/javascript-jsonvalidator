@@ -56,14 +56,6 @@ export type Schema
   | ObjectSchema
   | OneOfSchema
 
-function getType(something: unknown) {
-  return Object.prototype.toString.call(something).replace("[object ", "").replace("]", "").toLowerCase();
-}
-
-function toString(something: unknown) {
-  return JSON.stringify(something, null, 2);
-}
-
 export const string: StringSchema = {
   type: "string"
 };
@@ -126,6 +118,14 @@ export const oneOf = (schemas: Array<Schema>): OneOfSchema => {
 };
 
 export const validate = <Input>(schema: Schema, input: Input): Input => {
+  const getType = (something: unknown): string => {
+    return Object.prototype.toString.call(something).replace("[object ", "").replace("]", "").toLowerCase();
+  };
+
+  const toString = (something: unknown): string => {
+    return JSON.stringify(something, null, 2);
+  };
+
   const inputType = getType(input);
   const inputToString = toString(input);
   const inputTypeToString = toString(inputType);

@@ -6,7 +6,6 @@ A sane validator for your insane JSON data
 
 ## Summary
 
-- [Summary](#summary)
 - [Requirements](#requirements)
 - [Usage](#usage)
 - [Installation](#installation)

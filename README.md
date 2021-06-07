@@ -3,11 +3,19 @@
 A sane validator for your insane JSON data
 
 [![Test](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml) [![Types](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/types.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/types.yaml) [![Build](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/build.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/build.yaml)
+
 ## Summary
 
 - [Summary](#summary)
 - [Requirements](#requirements)
 - [Installation](#installation)
+  - [Node](#node)
+    - [ECMAScript](#ecmascript)
+    - [CommonJS](#commonjs)
+    - [TypeScript](#typescript)
+  - [Browser](#browser)
+    - [Script](#script)
+    - [ECMAScript Module](#ecmascript-module)
 - [Uninstallation](#uninstallation)
 - [Usage](#usage)
 - [API](#api)
@@ -32,8 +40,120 @@ A sane validator for your insane JSON data
 
 ## Installation
 
+### Node
+
 ```console
 $ npm install @aminnairi/jsonvalidator
+```
+
+#### ECMAScript
+
+```console
+$ touch index.mjs
+```
+
+```typescript
+import jsonvalidator from "@aminnairi/jsonvalidator";
+
+const {validate, string} = jsonvalidator;
+
+try {
+  validate(string, null);
+} catch (error) {
+  console.error(error.message);
+}
+```
+
+```console
+$ node index.mjs
+expected null to be of type "string"
+```
+
+#### CommonJS
+
+```console
+$ touch index.js
+```
+
+```javascript
+"use strict";
+
+const {validate, string} = require("@aminnairi/jsonvalidator");
+
+try {
+  validate(string, null);
+} catch (error) {
+  console.error(error.message);
+}
+```
+
+```console
+$ node index.js
+expected null to be of type "string"
+```
+
+#### TypeScript
+
+```console
+$ touch index.ts
+```
+
+```typescript
+import {validate, string} from "@aminnairi/jsonvalidator";
+
+try {
+  validate(string, null);
+} catch (error) {
+  console.error(error.message);
+}
+```
+
+```console
+$ npx ts-node index.ts
+expected null to be of type "string"
+```
+
+### Browser
+
+#### Script
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="https://unpkg.com/@aminnairi/jsonvalidator"></script>
+    <script>
+      "use strict";
+      
+      const {validate, string} = window.aminnairi.jsonvalidator;
+
+      try {
+        validate(string, null);
+      } catch (error) {
+        console.error(error.message);
+      }
+    </script>
+  </body>
+</html>
+```
+
+#### ECMAScript Module
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script type="module">
+      import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
+      
+      try {
+        validate(string, null);
+      } catch (error) {
+        console.error(error.message);
+      }
+    </script>
+  </body>
+</html>
 ```
 
 [Back to summary](#summary)

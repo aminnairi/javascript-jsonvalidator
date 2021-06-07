@@ -6,8 +6,8 @@ A sane validator for your insane JSON data
 
 ## Summary
 
-- [Requirements](#requirements)
 - [Usage](#usage)
+- [Requirements](#requirements)
 - [Installation](#installation)
   - [Deno](#deno)
     - [ECMAScript Module](#ecmascript-module)
@@ -32,12 +32,6 @@ A sane validator for your insane JSON data
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [License](#license)
-
-## Requirements
-
-- [Node](https://nodejs.org/)
-
-[Back to summary](#summary)
 
 ## Usage
 
@@ -94,6 +88,12 @@ expected null to be of type "string", at index 3 of [
   }
 ]
 ```
+
+[Back to summary](#summary)
+
+## Requirements
+
+- [Node](https://nodejs.org/)
 
 [Back to summary](#summary)
 

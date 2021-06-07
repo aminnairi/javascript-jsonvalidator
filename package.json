@@ -20,7 +20,7 @@
   "module": "index.mjs",
   "name": "@aminnairi/jsonvalidator",
   "types": "index.d.ts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "types": "tsc --declaration --emitDeclarationOnly --outDir . ./sources/index.ts",
     "build": "rollup -c",

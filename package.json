@@ -6,7 +6,8 @@
   "files": [
     "index.js",
     "index.d.ts",
-    "index.mjs"
+    "index.mjs",
+    "index.ts"
   ],
   "homepage": "https://github.com/aminnairi/javascript-jsonvalidator",
   "keywords": [

@@ -8,12 +8,21 @@
 import {resolve} from "path";
 import {terser} from "rollup-plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import copy from "rollup-plugin-copy";
 
 export default {
   input: resolve("sources", "index.ts"),
   plugins: [
     typescript(),
-    terser()
+    terser(),
+    copy({
+      targets: [
+        {
+          src: resolve("sources", "index.ts"),
+          dest: resolve("")
+        }
+      ]
+    })
   ],
   output: [
     {
@@ -26,4 +35,4 @@ export default {
       format: "esm"
     }
   ]
-}
+};

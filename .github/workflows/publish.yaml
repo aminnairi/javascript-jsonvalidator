@@ -19,6 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: NPM Token
+        run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}' > .npmrc
+
+      - name: Coveralls Token
+        run: echo 'repo_token: ${{ COVERALLS_TOKEN }}' > .coveralls.yml
+
       - name: Dependencies
         run: make install
 
@@ -31,8 +37,8 @@ jobs:
       - name: build
         run: make build
 
-      - name: Token
-        run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}' > .npmrc
-
-      - name: publish
+      - name: Publish
         run: make publish
+
+      - name: Coverage
+        run: make coverage

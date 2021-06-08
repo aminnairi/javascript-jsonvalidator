@@ -2,7 +2,7 @@
 
 A sane validator for your insane JSON data
 
-[![Test](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml) [![Types](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/types.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/types.yaml) [![Build](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/build.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/build.yaml) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator@0.1.0) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator@0.1.0)
+[![Test](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml/badge.svg)](https://github.com/aminnairi/javascript-jsonvalidator/actions/workflows/test.yaml) [![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator@0.1.0) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator@0.1.0)
 
 ## Summary
 

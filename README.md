@@ -2,7 +2,7 @@
 
 A sane validator for your insane JSON data
 
-[![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator)
+[![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![vulnerabilities count](https://badgen.net/snyk/aminnairi/javascript-jsonvalidator)](https://snyk.io/advisor/npm-package/@aminnairi/jsonvalidator)
 
 ## Summary
 

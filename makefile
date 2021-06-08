@@ -29,5 +29,5 @@ publish:
 pack:
 	docker-compose run $(DOCKER_COMPOSE_RUN_OPTIONS) npm pack --dry-run
 
-pack:
+coverage:
 	docker-compose run $(DOCKER_COMPOSE_RUN_OPTIONS) npm run coverage

@@ -6,3 +6,4 @@
 /.npmrc
 /index.mjs
 /index.ts
+/.coveralls.yml

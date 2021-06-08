@@ -53,3 +53,10 @@ $ make build
 ```console
 $ make pack
 ```
+## Coverage
+
+*Send coverage data to Coveralls.*
+
+```console
+$ make test coverage
+```

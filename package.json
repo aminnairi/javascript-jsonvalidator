@@ -20,7 +20,7 @@
   "module": "index.mjs",
   "name": "@aminnairi/jsonvalidator",
   "types": "index.d.ts",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "sideEffects": false,
   "scripts": {
     "coverage": "coveralls < coverage/lcov.info",

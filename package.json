@@ -21,6 +21,7 @@
   "name": "@aminnairi/jsonvalidator",
   "types": "index.d.ts",
   "version": "0.4.0",
+  "sideEffects": false,
   "scripts": {
     "coverage": "coveralls < coverage/lcov.info",
     "types": "tsc --declaration --emitDeclarationOnly --outDir . ./sources/index.ts",

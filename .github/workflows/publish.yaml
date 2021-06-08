@@ -23,7 +23,7 @@ jobs:
         run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}' > .npmrc
 
       - name: Coveralls Token
-        run: echo 'repo_token: ${{ COVERALLS_TOKEN }}' > .coveralls.yml
+        run: echo 'repo_token: ${{ secrets.COVERALLS_TOKEN }}' > .coveralls.yml
 
       - name: Dependencies
         run: make install

@@ -127,7 +127,7 @@ export const oneOf = (schemas: Array<Schema>): OneOfSchema => {
   };
 };
 
-export const validate = (schema: Schema, input: unknown): FailedValidation | SucceededValidation => {
+export const validate = (schema: Schema, input: unknown): Validation => {
   const getType = (something: unknown): string => {
     return Object.prototype.toString.call(something).replace(/\[object\s+(\w+)]/, "$1").toLowerCase();
   };
@@ -219,7 +219,7 @@ export const validate = (schema: Schema, input: unknown): FailedValidation | Suc
     }
 
     return array.reduce((previousValidation: Validation, item: unknown, itemIndex: number): Validation => {
-      if (itemIndex !== 0 && previousValidation.error) {
+      if (previousValidation.error) {
         return previousValidation;
       }
 
@@ -230,7 +230,7 @@ export const validate = (schema: Schema, input: unknown): FailedValidation | Suc
       }
 
       return previousValidation;
-    }, initialValidation);
+    }, initialValidation) as Validation;
   }
 
   if (inputType !== schema.type) {

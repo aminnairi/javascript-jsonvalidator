@@ -7,7 +7,6 @@ A sane validator for your insane JSON data
 ## Summary
 
 - [Usage](#usage)
-- [Requirements](#requirements)
 - [Installation](#installation)
   - [Deno](#deno)
     - [ECMAScript Module](#ecmascript-module)
@@ -19,7 +18,6 @@ A sane validator for your insane JSON data
   - [Browser](#browser)
     - [Script](#script)
     - [ECMAScript Module](#ecmascript-module-1)
-- [Uninstallation](#uninstallation)
 - [API](#api)
   - [validate](#validate)
   - [string](#string)
@@ -54,12 +52,12 @@ try {
 ```
 
 ```console
-expected null to be of type "string", at index 3 of [
+expected null to be of type String, at index 3 of [
   "haskell",
   "purescript",
   "elm",
   null
-], for property "languages" of {
+], for property languages of {
   "id": 2,
   "languages": [
     "haskell",
@@ -91,21 +89,11 @@ expected null to be of type "string", at index 3 of [
 
 [Back to summary](#summary)
 
-## Requirements
-
-- [Node](https://nodejs.org/)
-
-[Back to summary](#summary)
-
 ## Installation
 
 ### Deno
 
 #### ECMAScript Module
-
-```console
-$ touch index.js
-```
 
 ```typescript
 import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
@@ -117,11 +105,9 @@ try {
 }
 ```
 
-#### TypeScript
+[Back to summary](#summary)
 
-```console
-$ touch index.ts
-```
+#### TypeScript
 
 ```typescript
 import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
@@ -133,17 +119,17 @@ try {
 }
 ```
 
+[Back to summary](#summary)
+
 ### Node
 
 ```console
 $ npm install @aminnairi/jsonvalidator
 ```
 
-#### ECMAScript
+[Back to summary](#summary)
 
-```console
-$ touch index.mjs
-```
+#### ECMAScript
 
 ```typescript
 import jsonvalidator from "@aminnairi/jsonvalidator";
@@ -157,16 +143,9 @@ try {
 }
 ```
 
-```console
-$ node index.mjs
-expected null to be of type "string"
-```
+[Back to summary](#summary)
 
 #### CommonJS
-
-```console
-$ touch index.js
-```
 
 ```javascript
 "use strict";
@@ -180,16 +159,9 @@ try {
 }
 ```
 
-```console
-$ node index.js
-expected null to be of type "string"
-```
+[Back to summary](#summary)
 
 #### TypeScript
-
-```console
-$ touch index.ts
-```
 
 ```typescript
 import {validate, string} from "@aminnairi/jsonvalidator";
@@ -201,10 +173,7 @@ try {
 }
 ```
 
-```console
-$ npx ts-node index.ts
-expected null to be of type "string"
-```
+[Back to summary](#summary)
 
 ### Browser
 
@@ -230,6 +199,8 @@ expected null to be of type "string"
 </html>
 ```
 
+[Back to summary](#summary)
+
 #### ECMAScript Module
 
 ```html
@@ -247,14 +218,6 @@ expected null to be of type "string"
     </script>
   </body>
 </html>
-```
-
-[Back to summary](#summary)
-
-## Uninstallation
-
-```console
-$ npm uninstall @aminnairi/jsonvalidator
 ```
 
 [Back to summary](#summary)

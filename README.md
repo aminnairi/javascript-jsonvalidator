@@ -6,32 +6,6 @@ A sane validator for your insane JSON data
 
 ## Summary
 
-- [Summary](#summary)
-- [Usage](#usage)
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - [Deno](#deno)
-    - [ECMAScript Module](#ecmascript-module)
-    - [TypeScript](#typescript)
-  - [Node](#node)
-    - [ECMAScript](#ecmascript)
-    - [CommonJS](#commonjs)
-    - [TypeScript](#typescript-1)
-  - [Browser](#browser)
-    - [Script](#script)
-    - [ECMAScript Module](#ecmascript-module-1)
-- [API](#api)
-  - [validate](#validate)
-  - [string](#string)
-  - [number](#number)
-  - [boolean](#boolean)
-  - [nil](#nil)
-  - [array](#array)
-  - [object](#object)
-  - [oneOf](#oneof)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Usage
 
@@ -54,12 +28,12 @@ try {
 ```
 
 ```console
-expected null to be of type "string", at index 3 of [
+expected null to be of type String, at index 3 of [
   "haskell",
   "purescript",
   "elm",
   null
-], for property "languages" of {
+], for property languages of {
   "id": 2,
   "languages": [
     "haskell",
@@ -88,12 +62,6 @@ expected null to be of type "string", at index 3 of [
   }
 ]
 ```
-
-[Back to summary](#summary)
-
-## Requirements
-
-- [Node](https://nodejs.org/)
 
 [Back to summary](#summary)
 

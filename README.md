@@ -6,6 +6,30 @@ A sane validator for your insane JSON data
 
 ## Summary
 
+- [Usage](#usage)
+- [Installation](#installation)
+  - [Deno](#deno)
+    - [ECMAScript Module](#ecmascript-module)
+    - [TypeScript](#typescript)
+  - [Node](#node)
+    - [ECMAScript](#ecmascript)
+    - [CommonJS](#commonjs)
+    - [TypeScript](#typescript-1)
+  - [Browser](#browser)
+    - [Script](#script)
+    - [ECMAScript Module](#ecmascript-module-1)
+- [API](#api)
+  - [validate](#validate)
+  - [string](#string)
+  - [number](#number)
+  - [boolean](#boolean)
+  - [nil](#nil)
+  - [array](#array)
+  - [object](#object)
+  - [oneOf](#oneof)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Usage
 

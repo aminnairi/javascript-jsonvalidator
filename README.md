@@ -2,7 +2,7 @@
 
 A sane validator for your insane JSON data
 
-[![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![vulnerabilities count](https://badgen.net/snyk/aminnairi/javascript-jsonvalidator)](https://snyk.io/advisor/npm-package/@aminnairi/jsonvalidator)
+[![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![vulnerabilities count](https://badgen.net/snyk/aminnairi/javascript-jsonvalidator)](https://snyk.io/advisor/npm-package/@aminnairi/jsonvalidator) [![NPM package version](https://badgen.net/npm/v/@aminnairi/jsonvalidator)](https://www.npmjs.com/package/@aminnairi/jsonvalidator) [![TypeScript typing included status](https://badgen.net/npm/types/@aminnairi/jsonvalidator)](https://github.com/aminnairi/javascript-jsonvalidator/blob/latest/sources/index.ts)
 
 ## Summary
 
@@ -34,20 +34,20 @@ A sane validator for your insane JSON data
 ## Usage
 
 ```typescript
-try {
-  const schema = array(object([
-    property("id", number),
-    property("languages", array(string))
-  ]));
-  
-  const data = [
-    {id: 1, languages: ["javascript", "php", "python", "ruby"]},
-    {id: 2, languages: ["haskell", "purescript", "elm", null]}
-  ];
-  
-  validate(schema, data);
-} catch (error) {
-  console.error(error.message);
+const schema = array(object([
+  property("id", number),
+  property("languages", array(string))
+]));
+
+const data = [
+  {id: 1, languages: ["javascript", "php", "python", "ruby"]},
+  {id: 2, languages: ["haskell", "purescript", "elm", null]}
+];
+
+const validation = validate(schema, data);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -98,10 +98,10 @@ expected null to be of type String, at index 3 of [
 ```typescript
 import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -110,12 +110,13 @@ try {
 #### TypeScript
 
 ```typescript
-import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
+import {validate, string, Validation, Schema} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const schema: Schema = string;
+const validation: Validation = validate(schema, null);
+
+if (validation.error) {
+  console.error(validation.error):
 }
 ```
 
@@ -136,10 +137,10 @@ import jsonvalidator from "@aminnairi/jsonvalidator";
 
 const {validate, string} = jsonvalidator;
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -152,10 +153,10 @@ try {
 
 const {validate, string} = require("@aminnairi/jsonvalidator");
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -166,10 +167,10 @@ try {
 ```typescript
 import {validate, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -189,10 +190,10 @@ try {
       
       const {validate, string} = window.aminnairi.jsonvalidator;
 
-      try {
-        validate(string, null);
-      } catch (error) {
-        console.error(error.message);
+      const validation = validate(string, null);
+
+      if (validation.error) {
+        console.error(validation.error);
       }
     </script>
   </body>
@@ -210,10 +211,10 @@ try {
     <script type="module">
       import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
       
-      try {
-        validate(string, null);
-      } catch (error) {
-        console.error(error.message);
+      const validation = validate(string, null);
+
+      if (validation.error) {
+        console.error(validation.error);
       }
     </script>
   </body>
@@ -235,10 +236,12 @@ export const validate = <Input>(schema: Schema, input: Input): Input;
 ```typescript
 import {validate, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(number, "123");
-} catch (error) {
-  console.error(error.message);
+const schema = number;
+
+const validation = validate(schema, "123");
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -255,10 +258,12 @@ export const string: StringSchema;
 ```typescript
 import {validate, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(string, "string");
-} catch (error) {
-  console.error(error.message);
+const schema = string;
+
+const validation = validate(schema, "string");
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -275,10 +280,12 @@ export const number: NumberSchema;
 ```typescript
 import {validate, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(number, 123);
-} catch (error) {
-  console.error(error.message);
+const schema = number;
+
+const validation = validate(schema, 123);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -295,10 +302,12 @@ export const boolean: BooleanSchema;
 ```typescript
 import {validate, boolean} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(boolean, true);
-} catch (error) {
-  console.error(error.message);
+const schema = boolean;
+
+const validation = validate(schema, true);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -315,10 +324,12 @@ export const nil: NullSchema = {
 ```typescript
 import {validate, nil} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(nil, null);
-} catch (error) {
-  console.error(error.message);
+const schema = nil;
+
+const validation = validate(schema, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -336,20 +347,24 @@ export const index = (i: number, schema: Schema): IndexSchema;
 ```typescript
 import {validate, array, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(array(number), [123, 456]);
-} catch (error) {
-  console.error(error.message);
+const schema = array(number);
+
+const validation = validate(schema, [123, 456]);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```typescript
 import {validate, array, index, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(array([index(0, string), index(1, number)]), ["123", 456]);
-} catch (error) {
-  console.error(error.message);
+const schema = array([index(0, string), index(1, number)]);
+
+const validation = validate(schema, ["123", 456]);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -368,20 +383,24 @@ export const optionalProperty = (key: string, schema: Schema): OptionalPropertyS
 ```typescript
 import {validate, object, property, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(object([property("x", number), property("y", number)]), {x: 1, y: 2});
-} catch (error) {
-  console.error(error.message);
+const schema = object([property("x", number), property("y", number)]);
+
+const validation = validate(schema, {x: 1, y: 2});
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```typescript
 import {validate, object, optionalProperty, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(object([optionalProperty("token", string)]), {});
-} catch (error) {
-  console.error(error.message);
+const schema = object([optionalProperty("token", string)]);
+
+const validation = validate(schema, {});
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -398,20 +417,24 @@ export const oneOf = (schemas: Array<Schema>): OneOfSchema;
 ```typescript
 import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(oneOf([number, string]), 123);
-} catch (error) {
-  console.error(error.message);
+const schema = oneOf([number, string]);
+
+const validation = validate(schema, 123);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```typescript
 import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(oneOf([array(string), string]), ["123", "456"]);
-} catch (error) {
-  console.error(error.message);
+const schema = oneOf([array(string), string]);
+
+const validation = validate(schema, ["123", "456"]);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 

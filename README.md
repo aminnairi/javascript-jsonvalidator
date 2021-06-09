@@ -105,6 +105,8 @@ try {
 }
 ```
 
+[Back to summary](#summary)
+
 #### TypeScript
 
 ```typescript
@@ -117,11 +119,15 @@ try {
 }
 ```
 
+[Back to summary](#summary)
+
 ### Node
 
 ```console
 $ npm install @aminnairi/jsonvalidator
 ```
+
+[Back to summary](#summary)
 
 #### ECMAScript
 
@@ -137,6 +143,8 @@ try {
 }
 ```
 
+[Back to summary](#summary)
+
 #### CommonJS
 
 ```javascript
@@ -151,6 +159,8 @@ try {
 }
 ```
 
+[Back to summary](#summary)
+
 #### TypeScript
 
 ```typescript
@@ -162,6 +172,8 @@ try {
   console.error(error.message);
 }
 ```
+
+[Back to summary](#summary)
 
 ### Browser
 
@@ -186,6 +198,8 @@ try {
   </body>
 </html>
 ```
+
+[Back to summary](#summary)
 
 #### ECMAScript Module
 

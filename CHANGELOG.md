@@ -2,6 +2,7 @@
 
 ## Versions
 
+- [`0.7.0`](#070)
 - [`0.6.0`](#060)
 - [`0.5.1`](#051)
 - [`0.5.0`](#050)
@@ -9,6 +10,20 @@
 - [`0.3.0`](#030)
 - [`0.2.0`](#020)
 - [`0.1.0`](#010)
+
+## 0.7.0
+
+### Major changes
+
+None.
+
+### Minor changes
+
+- Documentation section uninstallation removed ([#16](https://github.com/aminnairi/javascript-jsonvalidator/pull/16))
+
+### Patches
+
+None.
 
 ## 0.6.0
 

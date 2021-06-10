@@ -64,7 +64,9 @@ export interface FailedValidation {
   error: string;
 }
 
-export type Validation = SucceededValidation | FailedValidation;
+export type Validation
+  = SucceededValidation
+  | FailedValidation
 
 export const string: StringSchema = {
   type: "string"

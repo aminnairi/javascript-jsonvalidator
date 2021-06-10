@@ -2,6 +2,7 @@
 
 ## Versions
 
+- [`1.0.0`](#100)
 - [`0.7.0`](#070)
 - [`0.6.0`](#060)
 - [`0.5.1`](#051)
@@ -10,6 +11,18 @@
 - [`0.3.0`](#030)
 - [`0.2.0`](#020)
 - [`0.1.0`](#010)
+
+## 1.0.0
+
+### Major changes
+
+- The validate function now returns a validation object instead of throwing ([#18](https://github.com/aminnairi/javascript-jsonvalidator/pull/18))
+
+### Minor changes
+
+### Patches
+
+None.
 
 ## 0.7.0
 

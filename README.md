@@ -54,12 +54,12 @@ if (validation.error) {
 ```
 
 ```console
-expected null to be of type String, at index 3 of [
+expected null to be of type "string", at index 3 of [
   "haskell",
   "purescript",
   "elm",
   null
-], for property languages of {
+], for property "languages" of {
   "id": 2,
   "languages": [
     "haskell",

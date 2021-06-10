@@ -60,3 +60,11 @@ $ make pack
 ```console
 $ make test coverage
 ```
+
+## Publish
+
+*Pack and publish the tarball of the package to the NPM registry.*
+
+```console
+$ make publish
+```

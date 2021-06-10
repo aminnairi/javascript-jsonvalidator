@@ -231,7 +231,28 @@ if (validation.error) {
 Check that an input is valid according to a given schema. Throws an error if it does not.
 
 ```typescript
-export const validate = <Input>(schema: Schema, input: Input): Input;
+export interface SucceededValidation {
+  error: false
+}
+
+export interface FailedValidation {
+  error: string;
+}
+
+export type Validation
+  = SucceededValidation
+  | FailedValidation
+
+export type Schema
+  = StringSchema
+  | NumberSchema
+  | BooleanSchema
+  | NullSchema
+  | ArraySchema
+  | ObjectSchema
+  | OneOfSchema
+
+export const validate = (schema: Schema, input: unknown): Validation;
 ```
 
 ```typescript
@@ -253,6 +274,10 @@ if (validation.error) {
 Schema for a string.
 
 ```typescript
+export interface StringSchema {
+  type: "string";
+}
+
 export const string: StringSchema;
 ```
 
@@ -275,6 +300,10 @@ if (validation.error) {
 Schema for a number.
 
 ```typescript
+export interface NumberSchema {
+  type: "number";
+}
+
 export const number: NumberSchema;
 ```
 
@@ -297,6 +326,10 @@ if (validation.error) {
 Schema for a boolean.
 
 ```typescript
+export interface BooleanSchema {
+  type: "boolean";
+}
+
 export const boolean: BooleanSchema;
 ```
 
@@ -319,6 +352,10 @@ if (validation.error) {
 Schema for null values.
 
 ```typescript
+export interface NullSchema {
+  type: "null";
+}
+
 export const nil: NullSchema = {
 ```
 
@@ -341,7 +378,19 @@ if (validation.error) {
 Schema for an array. It accepts either another schema or an array of index schema. An index schema is a special schema that only works for arrays and can validate data for a wanted array index.
 
 ```typescript
+export interface IndexSchema {
+  type: "index";
+  index: number;
+  schema: Schema;
+}
+
+export interface ArraySchema {
+  type: "array";
+  values: Schema | Array<IndexSchema>;
+}
+
 export const array = (schema: Schema | Array<IndexSchema>): ArraySchema;
+
 export const index = (i: number, schema: Schema): IndexSchema;
 ```
 
@@ -362,7 +411,7 @@ import {validate, array, index, number} from "@aminnairi/jsonvalidator";
 
 const schema = array([index(0, string), index(1, number)]);
 
-const validation = validate(schema, ["123", 456]);
+const validation = validate(schema, [123, 456]);
 
 if (validation.error) {
   console.error(validation.error);
@@ -376,8 +425,27 @@ if (validation.error) {
 Schema for an object. It accepts an array of property schema or optional property schema. A property schema is a special schema that allows the validation of a data for a wanted property. An optional property schema is similar to a property schema, except the data can be missing. A missing data is simply a data that is not present in the JSON data. Null values are not considered missing data.
 
 ```typescript
+export interface PropertySchema {
+  type: "property";
+  key: string;
+  schema: Schema;
+}
+
+export interface OptionalPropertySchema {
+  type: "optionalProperty";
+  key: string;
+  schema: Schema;
+}
+
+export interface ObjectSchema {
+  type: "object";
+  properties: Array<PropertySchema | OptionalPropertySchema>;
+}
+
 export const object = (properties: Array<PropertySchema | OptionalPropertySchema>): ObjectSchema;
+
 export const property = (key: string, schema: Schema): PropertySchema;
+
 export const optionalProperty = (key: string, schema: Schema): OptionalPropertySchema;
 ```
 
@@ -412,6 +480,11 @@ if (validation.error) {
 Schema for validating multiple possible schema for one data. It accepts an array of schema, excepted the special schemas mentioned above.
 
 ```typescript
+export interface OneOfSchema {
+  type: "oneOf";
+  schemas: Array<Schema>;
+}
+
 export const oneOf = (schemas: Array<Schema>): OneOfSchema;
 ```
 
@@ -421,18 +494,6 @@ import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
 const schema = oneOf([number, string]);
 
 const validation = validate(schema, 123);
-
-if (validation.error) {
-  console.error(validation.error);
-}
-```
-
-```typescript
-import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
-
-const schema = oneOf([array(string), string]);
-
-const validation = validate(schema, ["123", "456"]);
 
 if (validation.error) {
   console.error(validation.error);

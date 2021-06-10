@@ -112,10 +112,9 @@ if (validation.error) {
 #### TypeScript
 
 ```typescript
-import {validate, string, Validation, Schema} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
+import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
 
-const schema: Schema = string;
-const validation: Validation = validate(schema, null);
+const validation = validate(string, null);
 
 if (validation.error) {
   console.error(validation.error):

@@ -23,16 +23,22 @@
   "version": "1.0.0",
   "sideEffects": false,
   "scripts": {
-    "coverage": "coveralls < coverage/lcov.info",
+    "lint": "eslint .",
+    "test": "jest",
     "types": "tsc --declaration --emitDeclarationOnly --outDir . ./sources/index.ts",
     "build": "rollup -c",
-    "test": "jest"
+    "coverage": "coveralls < coverage/lcov.info"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "8.2.1",
     "@types/jest": "26.0.23",
     "@types/node": "15.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
     "coveralls": "3.1.0",
+    "eslint": "7.28.0",
+    "eslint-plugin-fp": "2.3.0",
+    "eslint-plugin-jest": "24.3.6",
     "jest": "27.0.4",
     "rollup": "2.50.6",
     "rollup-plugin-copy": "3.4.0",

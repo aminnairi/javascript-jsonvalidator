@@ -23,87 +23,99 @@
 import {validate, number, boolean, nil, string, array, object, property, oneOf, optionalProperty, index} from "./index";
 
 describe("jsonvalidator", () => {
-  it("should throw if validation fails for a number", () => {
-    expect(() => validate(number, "123")).toThrow(new Error('expected "123" to be of type "number"'));
+  it("should return an error if validation fails for a number", () => {
+    expect(validate(number, "123")).toEqual({error: 'expected "123" to be of type "number"'});
   });
 
-  it("should throw if validation fails for a boolean", () => {
-    expect(() => validate(boolean, "123")).toThrow(new Error('expected "123" to be of type "boolean"'));
+  it("should return an error if validation fails for a boolean", () => {
+    expect(validate(boolean, "123")).toEqual({error: 'expected "123" to be of type "boolean"'});
   });
 
-  it("should throw if validation fails for a null", () => {
-    expect(() => validate(nil, "123")).toThrow(new Error('expected "123" to be of type "null"'));
+  it("should return an error if validation fails for a null", () => {
+    expect(validate(nil, "123")).toEqual({error: 'expected "123" to be of type "null"'});
   });
 
-  it("should throw if validation fails for a string", () => {
-    expect(() => validate(string, 123)).toThrow(new Error('expected 123 to be of type "string"'));
+  it("should return an error if validation fails for a string", () => {
+    expect(validate(string, 123)).toEqual({error: 'expected 123 to be of type "string"'});
   });
 
-  it("should throw if validation fails for an array", () => {
-    expect(() => validate(array(number), 123)).toThrow(new Error('expected 123 to be of type "array"'));
+  it("should return an error if validation fails for an array", () => {
+    expect(validate(array(number), 123)).toEqual({error: 'expected 123 to be of type "array"'});
   });
 
-  it("should throw if validation fails for the values of an array", () => {
-    expect(() => validate(array(number), ["123"])).toThrow(new Error('expected "123" to be of type "number", at index 0 of [\n  "123"\n]'));
+  it("should return an error if validation fails for the values of an array", () => {
+    expect(validate(array(number), ["123"])).toEqual({error: 'expected "123" to be of type "number", at index 0 of [\n  "123"\n]'});
   });
 
-  it("should throw if validation fails for an object", () => {
-    expect(() => validate(object([property("number", number)]), 123)).toThrow(new Error('expected 123 to be of type "object"'));
+  it("should return an error if validation fails for an object", () => {
+    expect(validate(object([property("number", number)]), 123)).toEqual({error: 'expected 123 to be of type "object"'});
   });
 
-  it("should throw if validation fails for missing properties of an object", () => {
-    expect(() => validate(object([property("number", number)]), {})).toThrow(new Error('expected {} to have a property "number"'));
+  it("should return an error if validation fails for missing properties of an object", () => {
+    expect(validate(object([property("number", number)]), {})).toEqual({error: 'expected {} to have a property "number"'});
   });
 
-  it("should throw if validation fails for the properties of an object", () => {
-    expect(() => validate(object([property("number", number)]), {number: "123"})).toThrow(new Error('expected "123" to be of type "number", for property "number" of {\n  "number": "123"\n}'));
+  it("should return an error if validation fails for the properties of an object", () => {
+    expect(validate(object([property("number", number)]), {number: "123"})).toEqual({error: 'expected "123" to be of type "number", for property "number" of {\n  "number": "123"\n}'});
   });
 
-  it("should throw if validation fails for an optional property of an object", () => {
-    expect(() => validate(object([optionalProperty("number", number)]), {number: "123"})).toThrow(new Error('expected "123" to be of type "number", or nothing, for property "number" of {\n  "number": "123"\n}'));
+  it("should return an error if validation fails for an optional property of an object", () => {
+    expect(validate(object([optionalProperty("number", number)]), {number: "123"})).toEqual({error: 'expected "123" to be of type "number", or nothing, for property "number" of {\n  "number": "123"\n}'});
   });
 
-  it("should throw if validation fails if none of the one of types is validated", () => {
-    expect(() => validate(oneOf([number, string]), null)).toThrow(new Error(`expected null to be of type "number", or expected null to be of type "string"`));
+  it("should return an error when validating multiple properties in an object", () => {
+    expect(validate(object([property("x", number), property("y", number)]), {x: "1", y: 2})).toEqual({error: 'expected "1" to be of type "number", for property "x" of {\n  "x": "1",\n  "y": 2\n}'});
   });
 
-  it("should throw if validation fails for an index of an array", () => {
-    expect(() => validate(array([index(0, string)]), [])).toThrow(`expected undefined to be of type "string", at index 0 of []`);
+  it("should return an error when validating multiple index in an array", () => {
+    expect(validate(array([index(0, string), index(1, number)]), [1, 2])).toEqual({error: 'expected 1 to be of type "string", at index 0 of [\n  1,\n  2\n]'});
+  });
+
+  it("should return an error when validating multiple elements in an array", () => {
+    expect(validate(array(number), ["1", 2])).toEqual({error: 'expected "1" to be of type "number", at index 0 of [\n  "1",\n  2\n]'});
+  });
+
+  it("should return an error if validation fails if none of the one of types is validated", () => {
+    expect(validate(oneOf([number, string]), null)).toEqual({error: `expected null to be of type "number", or expected null to be of type "string"`});
+  });
+
+  it("should return an error if validation fails for an index of an array", () => {
+    expect(validate(array([index(0, string)]), [])).toEqual({error: `expected undefined to be of type "string", at index 0 of []`});
   });
 
   it("should succeed if validating a number", () => {
-    expect(validate(number, 123)).toEqual(123);
+    expect(validate(number, 123)).toEqual({error: false});
   });
 
   it("should succeed if validating a string", () => {
-    expect(validate(string, "string")).toEqual("string");
+    expect(validate(string, "string")).toEqual({error: false});
   });
 
   it("should succeed if validating a null", () => {
-    expect(validate(nil, null)).toEqual(null);
+    expect(validate(nil, null)).toEqual({error: false});
   });
 
   it("should succeed if validating a boolean", () => {
-    expect(validate(boolean, false)).toEqual(false);
+    expect(validate(boolean, false)).toEqual({error: false});
   });
 
   it("should succeed if validating an array", () => {
-    expect(validate(array(number), [1, 2, 3])).toEqual([1, 2, 3]);
+    expect(validate(array(number), [1, 2, 3])).toEqual({error: false});
   });
 
   it("should succeed if validating an object", () => {
-    expect(validate(object([property("number", number)]), {number: 123})).toEqual({number: 123});
+    expect(validate(object([property("number", number)]), {number: 123})).toEqual({error: false});
   });
 
   it("should succeed if validating one of the wanted types", () => {
-    expect(validate(oneOf([number, string]), 123)).toEqual(123);
+    expect(validate(oneOf([number, string]), 123)).toEqual({error: false});
   });
 
   it("should succeed if validating an optional property", () => {
-    expect(validate(object([optionalProperty("id", number)]), {})).toEqual({});
+    expect(validate(object([optionalProperty("id", number)]), {})).toEqual({error: false});
   });
 
   it("should succeed if validating an array at specific indexes", () => {
-    expect(validate(array([index(0, number), index(2, string)]), [123, null, "456"])).toEqual([123, null, "456"]);
+    expect(validate(array([index(0, number), index(2, string)]), [123, null, "456"])).toEqual({error: false});
   });
 });

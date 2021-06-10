@@ -2,7 +2,7 @@
 
 A sane validator for your insane JSON data
 
-[![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![vulnerabilities count](https://badgen.net/snyk/aminnairi/javascript-jsonvalidator)](https://snyk.io/advisor/npm-package/@aminnairi/jsonvalidator)
+[![NPM package version](https://badgen.net/npm/v/@aminnairi/jsonvalidator)](https://www.npmjs.com/package/@aminnairi/jsonvalidator) [![TypeScript typing included status](https://badgen.net/npm/types/@aminnairi/jsonvalidator)](https://github.com/aminnairi/javascript-jsonvalidator/blob/latest/sources/index.ts) [![Code coverage in percent](https://badgen.net/coveralls/c/github/aminnairi/javascript-jsonvalidator/latest)](https://coveralls.io/github/aminnairi/javascript-jsonvalidator) [![minified + gzipped package size](https://badgen.net/bundlephobia/minzip/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![tree-shaking support status](https://badgen.net/bundlephobia/tree-shaking/@aminnairi/jsonvalidator)](https://bundlephobia.com/package/@aminnairi/jsonvalidator) [![vulnerabilities count](https://badgen.net/snyk/aminnairi/javascript-jsonvalidator)](https://snyk.io/advisor/npm-package/@aminnairi/jsonvalidator)
 
 ## Summary
 
@@ -34,30 +34,32 @@ A sane validator for your insane JSON data
 ## Usage
 
 ```typescript
-try {
-  const schema = array(object([
-    property("id", number),
-    property("languages", array(string))
-  ]));
-  
-  const data = [
-    {id: 1, languages: ["javascript", "php", "python", "ruby"]},
-    {id: 2, languages: ["haskell", "purescript", "elm", null]}
-  ];
-  
-  validate(schema, data);
-} catch (error) {
-  console.error(error.message);
+import {validate, array, object, property, string, number} from "@aminnairi/jsonvalidator";
+
+const schema = array(object([
+  property("id", number),
+  property("languages", array(string))
+]));
+
+const data = [
+  {id: 1, languages: ["javascript", "php", "python", "ruby"]},
+  {id: 2, languages: ["haskell", "purescript", "elm", null]}
+];
+
+const validation = validate(schema, data);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```console
-expected null to be of type String, at index 3 of [
+expected null to be of type "string", at index 3 of [
   "haskell",
   "purescript",
   "elm",
   null
-], for property languages of {
+], for property "languages" of {
   "id": 2,
   "languages": [
     "haskell",
@@ -98,10 +100,10 @@ expected null to be of type String, at index 3 of [
 ```typescript
 import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -112,10 +114,10 @@ try {
 ```typescript
 import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator/index.ts";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error):
 }
 ```
 
@@ -136,10 +138,10 @@ import jsonvalidator from "@aminnairi/jsonvalidator";
 
 const {validate, string} = jsonvalidator;
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -152,10 +154,10 @@ try {
 
 const {validate, string} = require("@aminnairi/jsonvalidator");
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -166,10 +168,10 @@ try {
 ```typescript
 import {validate, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(string, null);
-} catch (error) {
-  console.error(error.message);
+const validation = validate(string, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -189,10 +191,10 @@ try {
       
       const {validate, string} = window.aminnairi.jsonvalidator;
 
-      try {
-        validate(string, null);
-      } catch (error) {
-        console.error(error.message);
+      const validation = validate(string, null);
+
+      if (validation.error) {
+        console.error(validation.error);
       }
     </script>
   </body>
@@ -210,10 +212,10 @@ try {
     <script type="module">
       import {validate, string} from "https://unpkg.com/@aminnairi/jsonvalidator?module";
       
-      try {
-        validate(string, null);
-      } catch (error) {
-        console.error(error.message);
+      const validation = validate(string, null);
+
+      if (validation.error) {
+        console.error(validation.error);
       }
     </script>
   </body>
@@ -229,16 +231,39 @@ try {
 Check that an input is valid according to a given schema. Throws an error if it does not.
 
 ```typescript
-export const validate = <Input>(schema: Schema, input: Input): Input;
+export interface SucceededValidation {
+  error: false
+}
+
+export interface FailedValidation {
+  error: string;
+}
+
+export type Validation
+  = SucceededValidation
+  | FailedValidation
+
+export type Schema
+  = StringSchema
+  | NumberSchema
+  | BooleanSchema
+  | NullSchema
+  | ArraySchema
+  | ObjectSchema
+  | OneOfSchema
+
+export const validate = (schema: Schema, input: unknown): Validation;
 ```
 
 ```typescript
 import {validate, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(number, "123");
-} catch (error) {
-  console.error(error.message);
+const schema = number;
+
+const validation = validate(schema, "123");
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -249,16 +274,22 @@ try {
 Schema for a string.
 
 ```typescript
+export interface StringSchema {
+  type: "string";
+}
+
 export const string: StringSchema;
 ```
 
 ```typescript
 import {validate, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(string, "string");
-} catch (error) {
-  console.error(error.message);
+const schema = string;
+
+const validation = validate(schema, "string");
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -269,16 +300,22 @@ try {
 Schema for a number.
 
 ```typescript
+export interface NumberSchema {
+  type: "number";
+}
+
 export const number: NumberSchema;
 ```
 
 ```typescript
 import {validate, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(number, 123);
-} catch (error) {
-  console.error(error.message);
+const schema = number;
+
+const validation = validate(schema, 123);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -289,16 +326,22 @@ try {
 Schema for a boolean.
 
 ```typescript
+export interface BooleanSchema {
+  type: "boolean";
+}
+
 export const boolean: BooleanSchema;
 ```
 
 ```typescript
 import {validate, boolean} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(boolean, true);
-} catch (error) {
-  console.error(error.message);
+const schema = boolean;
+
+const validation = validate(schema, true);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -309,16 +352,22 @@ try {
 Schema for null values.
 
 ```typescript
+export interface NullSchema {
+  type: "null";
+}
+
 export const nil: NullSchema = {
 ```
 
 ```typescript
 import {validate, nil} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(nil, null);
-} catch (error) {
-  console.error(error.message);
+const schema = nil;
+
+const validation = validate(schema, null);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -329,27 +378,43 @@ try {
 Schema for an array. It accepts either another schema or an array of index schema. An index schema is a special schema that only works for arrays and can validate data for a wanted array index.
 
 ```typescript
+export interface IndexSchema {
+  type: "index";
+  index: number;
+  schema: Schema;
+}
+
+export interface ArraySchema {
+  type: "array";
+  values: Schema | Array<IndexSchema>;
+}
+
 export const array = (schema: Schema | Array<IndexSchema>): ArraySchema;
+
 export const index = (i: number, schema: Schema): IndexSchema;
 ```
 
 ```typescript
 import {validate, array, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(array(number), [123, 456]);
-} catch (error) {
-  console.error(error.message);
+const schema = array(number);
+
+const validation = validate(schema, [123, 456]);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```typescript
 import {validate, array, index, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(array([index(0, string), index(1, number)]), ["123", 456]);
-} catch (error) {
-  console.error(error.message);
+const schema = array([index(0, string), index(1, number)]);
+
+const validation = validate(schema, [123, 456]);
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -360,28 +425,51 @@ try {
 Schema for an object. It accepts an array of property schema or optional property schema. A property schema is a special schema that allows the validation of a data for a wanted property. An optional property schema is similar to a property schema, except the data can be missing. A missing data is simply a data that is not present in the JSON data. Null values are not considered missing data.
 
 ```typescript
+export interface PropertySchema {
+  type: "property";
+  key: string;
+  schema: Schema;
+}
+
+export interface OptionalPropertySchema {
+  type: "optionalProperty";
+  key: string;
+  schema: Schema;
+}
+
+export interface ObjectSchema {
+  type: "object";
+  properties: Array<PropertySchema | OptionalPropertySchema>;
+}
+
 export const object = (properties: Array<PropertySchema | OptionalPropertySchema>): ObjectSchema;
+
 export const property = (key: string, schema: Schema): PropertySchema;
+
 export const optionalProperty = (key: string, schema: Schema): OptionalPropertySchema;
 ```
 
 ```typescript
 import {validate, object, property, number} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(object([property("x", number), property("y", number)]), {x: 1, y: 2});
-} catch (error) {
-  console.error(error.message);
+const schema = object([property("x", number), property("y", number)]);
+
+const validation = validate(schema, {x: 1, y: 2});
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
 ```typescript
 import {validate, object, optionalProperty, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(object([optionalProperty("token", string)]), {});
-} catch (error) {
-  console.error(error.message);
+const schema = object([optionalProperty("token", string)]);
+
+const validation = validate(schema, {});
+
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 
@@ -392,26 +480,23 @@ try {
 Schema for validating multiple possible schema for one data. It accepts an array of schema, excepted the special schemas mentioned above.
 
 ```typescript
+export interface OneOfSchema {
+  type: "oneOf";
+  schemas: Array<Schema>;
+}
+
 export const oneOf = (schemas: Array<Schema>): OneOfSchema;
 ```
 
 ```typescript
 import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
 
-try {
-  validate(oneOf([number, string]), 123);
-} catch (error) {
-  console.error(error.message);
-}
-```
+const schema = oneOf([number, string]);
 
-```typescript
-import {validate, oneOf, number, string} from "@aminnairi/jsonvalidator";
+const validation = validate(schema, 123);
 
-try {
-  validate(oneOf([array(string), string]), ["123", "456"]);
-} catch (error) {
-  console.error(error.message);
+if (validation.error) {
+  console.error(validation.error);
 }
 ```
 

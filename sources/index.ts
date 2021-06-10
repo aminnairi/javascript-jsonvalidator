@@ -1,3 +1,10 @@
+/*!
+ * Copyright © 2021 Amin NAIRI
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 export interface StringSchema {
   type: "string";
 }
@@ -55,6 +62,18 @@ export type Schema
   | ArraySchema
   | ObjectSchema
   | OneOfSchema
+
+export interface SucceededValidation {
+  error: false
+}
+
+export interface FailedValidation {
+  error: string;
+}
+
+export type Validation
+  = SucceededValidation
+  | FailedValidation
 
 export const string: StringSchema = {
   type: "string"
@@ -117,104 +136,115 @@ export const oneOf = (schemas: Array<Schema>): OneOfSchema => {
   };
 };
 
-export const validate = <Input>(schema: Schema, input: Input): Input => {
+export const validate = (schema: Schema, input: unknown): Validation => {
   const getType = (something: unknown): string => {
-    return Object.prototype.toString.call(something).replace("[object ", "").replace("]", "").toLowerCase();
+    return Object.prototype.toString.call(something).replace(/\[object\s+(\w+)]/, "$1").toLowerCase();
   };
 
   const toString = (something: unknown): string => {
     return JSON.stringify(something, null, 2);
   };
 
-  const inputType = getType(input);
-  const inputToString = toString(input);
-  const inputTypeToString = toString(inputType);
-  const schemaTypeToString = toString(schema.type);
+  const inputType: string = getType(input);
+  const inputToString: string = toString(input);
+  const schemaTypeToString: string = toString(schema.type);
+  const initialValidation: Validation = {error: false};
 
   if (schema.type === "oneOf") {
-    const errors = schema.schemas.map(oneOfSchema => {
-      try {
-        validate(oneOfSchema, input);
-        return null;
-      } catch (error) {
-        return error;
+    const errors: Array<string> = schema.schemas.reduce((previousErrors: Array<string>, oneOfSchema: Schema): Array<string> => {
+      const newValidation: Validation = validate(oneOfSchema, input);
+
+      if (newValidation.error) {
+        return [...previousErrors, newValidation.error];
       }
-    }).filter(error => error !== null);
+
+      return previousErrors;
+    }, []);
 
     if (errors.length === schema.schemas.length) {
-      throw new Error(errors.map(error => error.message).join(", or "));
+      return {error: errors.join(", or ")};
     }
 
-    return input;
+    return {error: false};
   }
 
   if (schema.type === "object") {
     if (inputType !== schema.type) {
-      throw new Error(`expected ${inputToString} to be of type ${schemaTypeToString}`);
+      return {error: `expected ${inputToString} to be of type ${schemaTypeToString}`};
     }
 
     const object = input as unknown as {[key: string]: unknown};
 
-    schema.properties.forEach(({type: propertySchemaType, key: propertyKey, schema: propertySchema}): void => {
-      const propertyKeyToString = toString(propertyKey);
+    return schema.properties.reduce((previousValidation: Validation, {type: propertySchemaType, key: propertyKey, schema: propertySchema}, propertySchemaIndex: number): Validation => {
+      if (propertySchemaIndex !== 0 && previousValidation.error) {
+        return previousValidation;
+      }
+
+      const propertyKeyToString: string = toString(propertyKey);
 
       if (!Object.prototype.hasOwnProperty.call(object, propertyKey)) {
         if (propertySchemaType === "optionalProperty") {
-          return;
+          return previousValidation;
         }
 
-        throw new Error(`expected ${inputToString} to have a property ${propertyKeyToString}`);
+        return {error: `expected ${inputToString} to have a property ${propertyKeyToString}`};
       }
 
-      try {
-        validate(propertySchema, object[propertyKey]);
-      } catch (error) {
+      const newValidation: Validation = validate(propertySchema, object[propertyKey]);
+
+      if (newValidation.error) {
         if (propertySchemaType === "optionalProperty") {
-          throw new Error(`${error.message}, or nothing, for property ${propertyKeyToString} of ${inputToString}`);
+          return {error: `${newValidation.error}, or nothing, for property ${propertyKeyToString} of ${inputToString}`};
         }
 
-        throw new Error(`${error.message}, for property ${propertyKeyToString} of ${inputToString}`);
+        return {error: `${newValidation.error}, for property ${propertyKeyToString} of ${inputToString}`};
       }
-    });
 
-    return input;
+      return previousValidation;
+    }, initialValidation);
   }
 
   if (schema.type === "array") {
     if (inputType !== schema.type) {
-      throw new Error(`expected ${inputToString} to be of type ${schemaTypeToString}`);
+      return {error: `expected ${inputToString} to be of type ${schemaTypeToString}`};
     }
 
     const array = input as unknown as Array<unknown>;
 
     if (Array.isArray(schema.values)) {
-      schema.values.forEach(({index, schema: indexSchema}) => {
-        try {
-          validate(indexSchema, array[index]);
-        } catch (error) {
-          throw new Error(`${error.message}, at index ${index} of ${inputToString}`);
+      return schema.values.reduce((previousValidation: Validation, {index, schema: indexSchema}, indexSchemaIndex: number): Validation => {
+        if (indexSchemaIndex !== 0 && previousValidation.error) {
+          return previousValidation;
         }
-      });
 
-      return input;
+        const newValidation: Validation = validate(indexSchema, array[index]);
+
+        if (newValidation.error) {
+          return {error: `${newValidation.error}, at index ${index} of ${inputToString}`};
+        }
+
+        return previousValidation;
+      }, initialValidation);
     }
 
-    array.forEach((item: unknown, itemIndex: number): void => {
-      const itemIndexToString = toString(itemIndex);
-
-      try {
-        validate(schema.values as Schema, item)
-      } catch (error) {
-        throw new Error(`${error.message}, at index ${itemIndexToString} of ${inputToString}`);
+    return array.reduce((previousValidation: Validation, item: unknown, itemIndex: number): Validation => {
+      if (previousValidation.error) {
+        return previousValidation;
       }
-    });
 
-    return input;
+      const newValidation: Validation = validate(schema.values as Schema, item);
+
+      if (newValidation.error) {
+        return {error: `${newValidation.error}, at index ${itemIndex} of ${inputToString}`};
+      }
+
+      return previousValidation;
+    }, initialValidation) as Validation;
   }
 
   if (inputType !== schema.type) {
-    throw new Error(`expected ${inputToString} to be of type ${schemaTypeToString}`);
+    return {error: `expected ${inputToString} to be of type ${schemaTypeToString}`};
   }
 
-  return input;
+  return {error: false};
 };

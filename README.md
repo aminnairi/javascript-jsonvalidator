@@ -34,6 +34,7 @@ A sane validator for your insane JSON data
 ## Usage
 
 ```typescript
+import {validate, array, object, property, string, number} from "@aminnairi/jsonvalidator";
 const schema = array(object([
   property("id", number),
   property("languages", array(string))

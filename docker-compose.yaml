@@ -6,6 +6,28 @@
 version: "3"
 
 services:
+  bash:
+    image: node:16.0.0
+    user: node
+    working_dir: /home/node
+    tty: true
+    stdin_open: true
+    entrypoint: bash
+    command: --help
+    volumes:
+      - .:/home/node
+
+  node:
+    image: node:16.0.0
+    user: node
+    working_dir: /home/node
+    tty: true
+    stdin_open: true
+    entrypoint: node
+    command: --help
+    volumes:
+      - .:/home/node
+
   npm:
     image: node:16.0.0
     user: node
